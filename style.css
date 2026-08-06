@@ -1,0 +1,19 @@
+/* Navigation styling — carried over from the class template */
+.navbar a {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    color: rgb(249, 245, 245);
+    text-transform: uppercase;
+}
+.navbar a:hover {
+    color: #00f0ff;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.site-footer {
+    background-color: #121212;
+    color: rgb(249, 245, 245);
+}
