@@ -12,7 +12,7 @@ services:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: gearout
     volumes:
       # Runs automatically the FIRST time this container's data volume is
@@ -30,7 +30,8 @@ services:
       - "8081:80"
     environment:
       PMA_HOST: db 
-      MYSQL_ROOT_PASSWORD: example 
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      PMA_ABSOLUTE_URI: https://${CODESPACE_NAME}-8081.app.github.dev
     depends_on:
       - db
 
