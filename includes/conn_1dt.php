@@ -5,7 +5,7 @@
 $host = 'db';
 $dbname = 'gearout';
 $user = 'root';
-$pass = 'example';
+$pass = getenv(DB_ROOT_PASSWORD);
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
