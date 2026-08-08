@@ -5,6 +5,8 @@ services:
       - "8080:80"
     volumes:
       - ./:/var/www/html
+    enviroment:
+      DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     depends_on:
       - db
 
