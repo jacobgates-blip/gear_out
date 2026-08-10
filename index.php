@@ -11,7 +11,7 @@ include('includes/nav.php');
     <div class="row align-items-start">
         <div class="col">
             <h1>Gear Out</h1>
-            <p class="lead">Track lunchtime sports equipment — what's out, who has it, and when it's due back.</p>
+            <p class="lead">Track lunchtime sports equipment. What's out, who has it, and when it's due back.</p>
         </div>
     </div>
 </div>
