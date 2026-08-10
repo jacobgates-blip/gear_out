@@ -14,14 +14,14 @@ $stmt = $pdo->query(
 );
 $loans = $stmt->fetchAll();
 
-// aggregate summary 
+// Aggregate summary for the dashboard cards.
 $stmt = $pdo->query(
     "SELECT
         COUNT(*)                  AS total_out,
         SUM(due_back < CURDATE()) AS total_overdue,
         MIN(due_back)             AS earliest_due
-    FROM loans
-    WHERE returned_date IS NULL"
+     FROM loans
+     WHERE returned_date IS NULL"
 );
 $summary = $stmt->fetch();
 
@@ -39,9 +39,34 @@ include('includes/nav.php');
             <?php if (isset($_GET['logged'])): ?><div class="alert alert-success">Loan logged.</div><?php endif; ?>
             <?php if (isset($_GET['returned'])): ?><div class="alert alert-success">Marked as returned.</div><?php endif; ?>
             <?php if (isset($_GET['deleted'])): ?><div class="alert alert-success">Entry deleted.</div><?php endif; ?>
-            
+
             <div class="row text-center pb-4">
-                ...
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="mb-0"><?= (int) $summary['total_out'] ?></h3>
+                            <p class="text-muted mb-0">Currently out</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="mb-0<?= $summary['total_overdue'] > 0 ? ' text-danger' : '' ?>">
+                                <?= (int) $summary['total_overdue'] ?>
+                            </h3>
+                            <p class="text-muted mb-0">Overdue</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="mb-0"><?= $summary['earliest_due'] ? htmlspecialchars($summary['earliest_due']) : '—' ?></h3>
+                            <p class="text-muted mb-0">Earliest due date outstanding</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="pb-4">
