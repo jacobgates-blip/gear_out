@@ -13,6 +13,18 @@ $stmt = $pdo->query(
      ORDER BY (returned_date IS NULL) DESC, due_back ASC"
 );
 $loans = $stmt->fetchAll();
+
+// aggregate summary 
+$stmt = $pdo->query(
+    "SELECT
+        COUNT(*)                  AS total_out,
+        SUM(due_back < CURDATE()) AS total_overdue,
+        MIN(due_back)             AS earliest_due
+    FROM loans
+    WHERE returned_date IS NULL"
+);
+$summary = $stmt->fetch();
+
 $today = date('Y-m-d');
 
 include('includes/header.php');
@@ -27,6 +39,10 @@ include('includes/nav.php');
             <?php if (isset($_GET['logged'])): ?><div class="alert alert-success">Loan logged.</div><?php endif; ?>
             <?php if (isset($_GET['returned'])): ?><div class="alert alert-success">Marked as returned.</div><?php endif; ?>
             <?php if (isset($_GET['deleted'])): ?><div class="alert alert-success">Entry deleted.</div><?php endif; ?>
+            
+            <div class="row text-center pb-4">
+                ...
+            </div>
 
             <div class="pb-4">
                 <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search...">
