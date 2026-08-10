@@ -34,7 +34,10 @@ include('includes/nav.php');
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-sm-10">
-            <h1 class="pt-5 pb-4">Manage loans</h1>
+            <div class="d-flex justify-content-between align-items-center pt-5 pb-4">
+                <h1 class="mb-0">Manage loans</h1>
+                <a href="borrow.php"><button class="btn btn-danger">Log a new loan</button></a>
+            </div>
 
             <?php if (isset($_GET['logged'])): ?><div class="alert alert-success">Loan logged.</div><?php endif; ?>
             <?php if (isset($_GET['returned'])): ?><div class="alert alert-success">Marked as returned.</div><?php endif; ?>
