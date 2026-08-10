@@ -7,7 +7,7 @@ $page_title = "Manage loans | Gear Out";
 
 // Join to monitors so we can show who logged each loan.
 $stmt = $pdo->query(
-    "SELECT loans.*, monitors.firstname AS logged_by_name
+    "SELECT loans.*, CONCAT(monitors.firstname, ' ', LEFT(monitors.lastname, 1), '.') AS logged_by_name 
      FROM loans
      LEFT JOIN monitors ON loans.logged_by = monitors.id
      ORDER BY (returned_date IS NULL) DESC, due_back ASC"
