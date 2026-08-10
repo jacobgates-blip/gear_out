@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS loans (
 -- Demo monitor account: monitor@school.nz / password123
 -- (the hash below is a real bcrypt hash of "password123")
 INSERT INTO monitors (firstname, lastname, email, password) VALUES
-    ('Alex', 'Ngata', 'monitor@school.nz', '$2y$10$Ygge3kKa.Sq/GD7/hEj58.RCYfmjNFBbr3.N/16V9TpTh59YFmLHO');
+    ('Alex', 'Ngata', 'monitor@school.nz', '$2y$10$Ygge3kKa.Sq/GD7/hEj58.RCYfmjNFBbr3.N/16V9TpTh59YFmLHO'),
+    ('Jacob', 'Gates', 'jgmonitor@school.nz', '$2y$10$Ygge3kKa.Sq/GD7/hEj58.RCYfmjNFBbr3.N/16V9TpTh59YFmLHO');
 
 -- A few sample loans so view_loans.php / manage_loans.php show something immediately.
 INSERT INTO loans (item_name, borrower_name, borrowed_date, due_back, returned_date, logged_by) VALUES
