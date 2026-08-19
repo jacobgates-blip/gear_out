@@ -20,49 +20,6 @@ functionality from the Gear Out booklet built on top of it.
 | `admin_delete.php` | `delete_loan.php` | Same job, fixed (see below) |
 | — | `includes/auth_check.php` | New — see below |
 
-`borrow.php` and `save_loan.php` stay as two files (form, then handler)
-rather than one combined file like `admin_sign.php` — that split was already
-established in the Gear Out student booklet, so it's kept for consistency
-with what your students will have already seen.
-
-## Three things fixed, not carried over
-
-**SQL injection in `admin_delete.php` and `admin_update.php`.**
-Both built queries like `"DELETE FROM admin_tbl WHERE id = $admin_id"`.
-`mysqli_real_escape_string()` was called on `$admin_id`, but since the
-value is dropped into the query *unquoted*, escaping quotes does nothing —
-a value like `1 OR 1=1` would still delete every row. `delete_loan.php` and
-`return_loan.php` here use `(int)` casting plus a bound PDO parameter
-instead, which closes it off properly either way.
-
-**No login check on the admin pages.** `admin_list.php`,
-`admin_update.php`, and `admin_delete.php` never checked `$_SESSION['id']`
-— only `control_panel.php` did. Anyone who knew or guessed the URL could
-reach them directly. Every protected page here (`borrow.php`,
-`save_loan.php`, `manage_loans.php`, `return_loan.php`, `delete_loan.php`,
-`control_panel.php`) starts with `require('includes/auth_check.php')` —
-one file, so the check can't be forgotten on a new page the way it was
-before.
-
-**A silent logic bug in `admin_update.php`.** The line
-`if (mysqli_query($conn, $sql_query));` has a semicolon straight after the
-`if` — the header redirect that follows runs *unconditionally*, whether the
-update worked or not, so a failed update would still show "success."
-`return_loan.php` avoids the shape of this bug by just running the
-prepared statement directly rather than branching on it.
-
-## What's new
-
-- **Login uses `password_hash()` / `password_verify()`**, not a plain-text
-  comparison — `includes/login_inc.php` does the checking.
-- **`loans.logged_by`** links each loan to the monitor who logged it (shown
-  in `manage_loans.php`'s "Logged by" column) — a small second table
-  relationship, useful if you want an Excellence-level "two related tables"
-  example without switching contexts entirely.
-- **The carousel wasn't carried over.** It suited a restaurant's photography;
-  Gear Out doesn't have anything to rotate, and it wasn't part of what
-  AS92005 actually assesses here.
-
 ## The moving parts that make the connection work
 
 `conn_1dt.php` can only connect to something that's actually running. Three
